@@ -1,6 +1,5 @@
 """Validation utilities for contact form."""
 import re
-from typing import Any
 
 
 def validate_email_format(email: str) -> bool:
@@ -32,7 +31,8 @@ def validate_required_fields(data: dict, required_fields: list) -> tuple:
         If valid, error_message will be None
     """
     for field in required_fields:
-        value = data.get(field, '').strip() if isinstance(data.get(field), str) else data.get(field)
+        value = data.get(field, '').strip() if isinstance(
+            data.get(field), str) else data.get(field)
         if not value:
             return False, f"{field.capitalize()} is required"
     return True, None
