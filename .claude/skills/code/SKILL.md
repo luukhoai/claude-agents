@@ -16,24 +16,32 @@ $ARGUMENTS
 
 ## Steps
 
-### 1. Implementation
+### 1. Read Plan & Analyze
 - Read approved plan from conversation
-- Implement code changes
+- Identify files to modify
+- Check existing code patterns in those files
+- Determine if new helper functions are needed
+
+### 2. Implement Code
+- Add new endpoints/routes in `app/routes/contacts.py`
+- Add new helper functions in `app/utils/helpers.py` if needed
+- Add new validators in `app/utils/validators.py` if needed
 - Follow project patterns:
   - Response format: `{ "success": true, "data": {...} }`
   - Blueprint pattern for routes
   - Use existing validators/helpers
+  - Add proper error handling with try/except
+  - Include logging
 
-### 2. Write Tests
-- Add unit tests in `tests/test_contacts.py`
-- Test success case
-- Test error cases
+### 3. Update Imports
+- Ensure all new functions are properly imported
+- Remove any unused imports
 
-### 3. Run Tests
-- Execute: `venv/bin/python -m pytest tests/ -v`
-- Fix any failures
+### 4. Verify Code
+- Run app to verify it starts without errors
+- Run linter to check code quality
 
-### 4. Complete
+### 5. Complete
 - Mark Code task done
 - Mark Test task in_progress
 - Invoke /test skill
@@ -41,24 +49,24 @@ $ARGUMENTS
 ## Checklist
 
 - [ ] Read approved plan
+- [ ] Analyze existing code patterns
 - [ ] Implement new feature/fix
+- [ ] Add helper functions in helpers.py if needed
+- [ ] Add validators in validators.py if needed
+- [ ] Update imports
 - [ ] Follow project patterns
-- [ ] Add error handling
-- [ ] Write unit tests
-- [ ] Run tests
-- [ ] Fix any test failures
+- [ ] Add error handling with try/except
+- [ ] Add logging
+- [ ] Verify app starts
 - [ ] Run linter
-- [ ] Format code
 
 ## Files to Modify
 - `app/routes/contacts.py` - endpoints
 - `app/utils/validators.py` - validation
-- `tests/test_contacts.py` - tests
+- `app/utils/helpers.py` - helper functions
 
 ## Commands
 ```bash
-venv/bin/python run.py
-venv/bin/python -m pytest tests/ -v
-venv/bin/python -m flake8 app/ tests/
-venv/bin/python -m black app/ tests/
+.venv/bin/python run.py
+.venv/bin/python -m flake8 app/
 ```

@@ -422,3 +422,73 @@ def test_update_contact_no_data(client):
     data = response.get_json()
     assert data['success'] is False
     assert 'no data' in data['error'].lower()
+
+
+def test_delete_contact_by_email_success(client):
+    """Test DELETE /api/contacts/by-email with valid email."""
+    # First create a contact
+    response = client.post('/api/contacts', json={
+        'name': 'John Doe',
+        'email': 'john@example.com',
+        'message': 'Test message'
+    })
+    assert response.status_code == 201
+
+    # Delete the contact
+    response = client.delete('/api/contacts/by-email?email=john@example.com')
+    assert response.status_code == 200
+    data = response.get_json()
+    assert data['success'] is True
+    assert data['data']['message'] == 'Contact deleted successfully'
+    assert data['data']['deleted_email'] == 'john@example.com'
+
+    # Verify contact is deleted
+    response = client.get('/api/contacts/check-email?email=john@example.com')
+    assert response.get_json()['data']['exists'] is False
+
+
+def test_delete_contact_by_email_not_found(client):
+    """Test DELETE /api/contacts/by-email with non-existent email."""
+    response = client.delete('/api/contacts/by-email?email=notfound@example.com')
+    assert response.status_code == 404
+    data = response.get_json()
+    assert data['success'] is False
+    assert 'not found' in data['error'].lower()
+
+
+def test_delete_contact_by_email_missing_param(client):
+    """Test DELETE /api/contacts/by-email without email parameter."""
+    response = client.delete('/api/contacts/by-email')
+    assert response.status_code == 400
+    data = response.get_json()
+    assert data['success'] is False
+    assert 'required' in data['error'].lower()
+
+
+def test_delete_contact_by_email_invalid_format(client):
+    """Test DELETE /api/contacts/by-email with invalid email format."""
+    response = client.delete('/api/contacts/by-email?email=invalid-email')
+    assert response.status_code == 400
+    data = response.get_json()
+    assert data['success'] is False
+    assert 'invalid' in data['error'].lower()
+
+
+def test_delete_contact_by_email_case_insensitive(client):
+    """Test DELETE /api/contacts/by-email is case-insensitive."""
+    # Create contact with uppercase email
+    client.post('/api/contacts', json={
+        'name': 'Jane Doe',
+        'email': 'Jane@Example.com',
+        'message': 'Test message'
+    })
+
+    # Delete with lowercase email
+    response = client.delete('/api/contacts/by-email?email=jane@example.com')
+    assert response.status_code == 200
+    data = response.get_json()
+    assert data['success'] is True
+
+    # Verify deleted
+    response = client.get('/api/contacts/check-email?email=Jane@Example.com')
+    assert response.get_json()['data']['exists'] is False

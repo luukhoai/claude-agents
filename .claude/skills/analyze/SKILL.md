@@ -19,27 +19,40 @@ $ARGUMENTS
 ### 1. Understand Requirements
 - Read the task description from $ARGUMENTS
 - Ask clarifying questions if needed
+- Identify scope: new feature, bug fix, or refactor
 
 ### 2. Analyze Codebase
-Explore Flask app:
-- `app/__init__.py` - app factory
-- `app/config.py` - configuration
-- `app/routes/contacts.py` - API endpoints
-- `app/utils/*.py` - utilities
+Explore Flask app structure:
+- `app/__init__.py` - app factory, config setup
+- `app/config.py` - configuration classes
+- `app/routes/contacts.py` - API endpoints, current patterns
+- `app/utils/validators.py` - existing validators
+- `app/utils/helpers.py` - existing helpers
+- `tests/test_contacts.py` - test patterns
 
-### 3. Create Implementation Plan
-Include:
-- What to build/modify
-- Files to change
-- Dependencies
+### 3. Design Solution
+- Define endpoint (method, URL, params)
+- Define request/response format
+- Identify helper functions needed
+- Identify validators needed
+- Consider edge cases and error handling
+
+### 4. Create Implementation Plan
+Document:
+- Endpoint design (URL, method, params)
+- Request/response format
+- Files to modify
+- Helper functions to add
+- Validators to add
+- Edge cases to handle
 - Potential issues
-- Implementation approach
 
-### 4. Present to User
+### 5. Present to User
 - Output plan clearly in markdown
+- Include code examples if helpful
 - Wait for approval
 
-### 5. Complete
+### 6. Complete
 - Mark Analysis task done
 - Mark Code task in_progress
 - Invoke /code skill
@@ -48,9 +61,13 @@ Include:
 
 - [ ] Understand requirements
 - [ ] Ask clarifying questions if needed
+- [ ] Identify scope
 - [ ] Read relevant source files
+- [ ] Analyze existing patterns
+- [ ] Design solution
+- [ ] Define endpoint design
 - [ ] Identify files to modify
-- [ ] Identify dependencies
+- [ ] Identify helper functions needed
 - [ ] Consider edge cases
 - [ ] Create implementation plan
 - [ ] Present plan to user
